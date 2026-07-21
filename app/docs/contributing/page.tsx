@@ -5,7 +5,7 @@ import { Callout } from "@/components/ui/Callout";
 
 export const metadata: Metadata = {
   title: "Contributing",
-  description: "How to contribute to the OxiPulse open-source project.",
+  description: "How to contribute to the Ferro Sentry open-source project.",
 };
 
 export default function ContributingPage() {
@@ -13,8 +13,8 @@ export default function ContributingPage() {
     <Prose>
       <h1>Contributing</h1>
       <p>
-        OxiPulse is an open-source project and contributions are welcome. This guide explains how
-        to set up a local development environment, run the agent, and submit a pull request.
+        Ferro Sentry is an open-source security project and contributions are welcome. This guide explains how
+        to set up a local development environment, write custom rules, and submit a pull request.
       </p>
 
       <h2>Prerequisites</h2>
@@ -24,20 +24,20 @@ export default function ContributingPage() {
           edition 2024 or later)
         </li>
         <li>Git</li>
-        <li>A Linux or macOS machine (Windows support for development is partial)</li>
+        <li>Linux or Windows development environment</li>
       </ul>
 
       <h2>Local setup</h2>
       <CodeBlock
         code={`# Clone the repo
-git clone https://github.com/securyblack/oxi-pulse.git
-cd oxi-pulse
+git clone https://github.com/securyblack/ferro-sentry.git
+cd ferro-sentry
 
 # Build in debug mode
 cargo build
 
-# Run the agent locally (set a dummy endpoint for testing)
-OXIPULSE_ENDPOINT=http://localhost:4317 OXIPULSE_TOKEN=test cargo run`}
+# Run the agent locally (using local debug output)
+FERROSENTRY_ENDPOINT=127.0.0.1:4317 FERROSENTRY_TOKEN=test cargo run`}
         language="bash"
         filename="Getting started"
       />
@@ -46,9 +46,10 @@ OXIPULSE_ENDPOINT=http://localhost:4317 OXIPULSE_TOKEN=test cargo run`}
       <CodeBlock
         code={`src/
 ├── main.rs          # Entry point, service loop
-├── config/          # Config loading (env vars + TOML)
-├── metrics/         # Metric collectors (cpu, ram, disk, net)
-├── telemetry/       # OTLP export via gRPC
+├── config.rs        # Config loading (env vars + TOML)
+├── engine/          # Event engine, dedup, severity scoring
+├── modules/         # Security modules (port_scanner, vuln_scanner)
+├── output/          # Telemetry output layer (sb_agent, direct, file)
 └── updater/         # Auto-update logic`}
         language="bash"
         filename="Source tree"
@@ -59,7 +60,7 @@ OXIPULSE_ENDPOINT=http://localhost:4317 OXIPULSE_TOKEN=test cargo run`}
       <ol>
         <li>Fork the repository on GitHub.</li>
         <li>
-          Create a branch: <code>git checkout -b feat/my-improvement</code>
+          Create a branch: <code>git checkout -b feat/my-security-rule</code>
         </li>
         <li>Make your changes and ensure <code>cargo build</code> passes.</li>
         <li>
@@ -83,10 +84,10 @@ OXIPULSE_ENDPOINT=http://localhost:4317 OXIPULSE_TOKEN=test cargo run`}
       <h2>Commit conventions</h2>
       <p>We use conventional commits for clean release notes:</p>
       <CodeBlock
-        code={`feat: add disk I/O metrics
-fix: prevent buffer overflow on large payloads
+        code={`feat: add SUID binary auditor
+fix: prevent false positive on port scan
 docs: update configuration reference
-chore: bump opentelemetry-otlp to 0.14`}
+chore: bump tonic to 0.12`}
         language="bash"
         filename="Commit format examples"
         showCopy={false}

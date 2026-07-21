@@ -5,7 +5,7 @@ import { Callout } from "@/components/ui/Callout";
 
 export const metadata: Metadata = {
   title: "Quick Start",
-  description: "Install OxiPulse and start collecting server metrics in under 5 minutes.",
+  description: "Install Ferro Sentry and start security auditing in under 5 minutes.",
 };
 
 export default function QuickStart() {
@@ -13,32 +13,31 @@ export default function QuickStart() {
     <Prose>
       <h1>Quick Start</h1>
       <p>
-        This guide gets OxiPulse installed and sending metrics in under 5 minutes.
-        You&apos;ll need a server running Linux (x86_64 or ARM64) or Windows, and an OTLP-compatible
-        endpoint to receive metrics.
+        This guide gets Ferro Sentry installed and auditing your server security posture in under 5 minutes.
+        You&apos;ll need a server running Linux (x86_64 or ARM64) or Windows.
       </p>
 
       <h2>Step 1 — Get your token</h2>
       <p>
-        Log in to the OxiPulse dashboard and generate an agent token from the{" "}
+        Log in to the SecuryBlack dashboard and generate an agent token from the{" "}
         <strong>Settings → Tokens</strong> page. It will look like{" "}
-        <code>op_live_xxxxxxxxxxxx</code>.
+        <code>fs_live_xxxxxxxxxxxx</code>.
       </p>
       <Callout variant="info">
-        If you&apos;re self-hosting your own OTLP collector, you can skip the token step and set{" "}
-        <code>OXIPULSE_ENDPOINT</code> directly to your collector&apos;s gRPC address.
+        If you&apos;re self-hosting your own OTLP collector, you can set{" "}
+        <code>FERROSENTRY_ENDPOINT</code> directly to your collector&apos;s gRPC address.
       </Callout>
 
       <h2>Step 2 — Install the agent</h2>
       <h3>Linux / macOS</h3>
       <CodeBlock
-        code={`curl -fsSL https://install.oxipulse.dev | sudo bash`}
+        code={`curl -fsSL https://install.ferrosentry.dev | sudo bash`}
         language="bash"
         filename="Terminal"
       />
       <h3>Windows (PowerShell — run as Administrator)</h3>
       <CodeBlock
-        code={`irm https://install.oxipulse.dev/windows | iex`}
+        code={`irm https://install.ferrosentry.dev | iex`}
         language="powershell"
         filename="PowerShell"
       />
@@ -50,11 +49,11 @@ export default function QuickStart() {
       <h2>Step 3 — Verify the agent is running</h2>
       <h3>Linux</h3>
       <CodeBlock
-        code={`systemctl status oxipulse`}
+        code={`systemctl status ferrosentry`}
         language="bash"
       />
       <CodeBlock
-        code={`● oxipulse.service - OxiPulse Telemetry Agent
+        code={`● ferrosentry.service - Ferro Sentry Security Agent
      Active: active (running)`}
         language="bash"
         filename="Expected output"
@@ -62,34 +61,35 @@ export default function QuickStart() {
       />
       <h3>Windows</h3>
       <CodeBlock
-        code={`Get-Service -Name OxiPulse`}
+        code={`Get-Service -Name FerroSentry`}
         language="powershell"
       />
 
-      <h2>Step 4 — Check data is flowing</h2>
+      <h2>Step 4 — Check security auditing logs</h2>
       <p>
-        Within 10–20 seconds of starting the agent, metrics should appear in your dashboard or
-        OTLP backend. You can also tail the logs to confirm:
+        Within minutes of starting the agent, posture findings should appear in your dashboard or
+        gRPC backend. You can also tail the logs to confirm:
       </p>
       <CodeBlock
         code={`# Linux
-journalctl -u oxipulse -f
+journalctl -u ferrosentry -f
 
 # Windows
-Get-EventLog -LogName Application -Source OxiPulse -Newest 10`}
+Get-EventLog -LogName Application -Source FerroSentry -Newest 10`}
         language="bash"
         filename="Logs"
       />
       <CodeBlock
-        code={`INFO oxipulse: agent started, sending metrics every 10s
-INFO oxipulse: metrics sent successfully (cpu=12.4%, ram=3.1GB/8GB)`}
+        code={`INFO ferro_sentry: agent started, auditing posture
+INFO ferro_sentry: port scanner completed (0 unauth exposed DBs found)
+INFO ferro_sentry: vuln scanner completed (SSH RootLogin disabled)`}
         language="bash"
         filename="Expected log output"
         showCopy={false}
       />
 
       <Callout variant="success">
-        That&apos;s it. OxiPulse is now running and streaming your server&apos;s vital signs.
+        That&apos;s it. Ferro Sentry is now running and protecting your server posture.
         The agent will also check for updates daily and self-update automatically.
       </Callout>
 
@@ -100,7 +100,7 @@ INFO oxipulse: metrics sent successfully (cpu=12.4%, ram=3.1GB/8GB)`}
           log level, buffer path
         </li>
         <li>
-          <a href="/docs/metrics">Metrics</a> — full list of what the agent collects
+          <a href="/docs/metrics">Modules</a> — full list of active and roadmap security sensors
         </li>
         <li>
           <a href="/docs/offline-buffer">Offline buffer</a> — how resilience works

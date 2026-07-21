@@ -3,48 +3,48 @@ import { Prose } from "@/components/ui/Prose";
 import { CodeBlock } from "@/components/ui/CodeBlock";
 
 export const metadata: Metadata = {
-  title: "Metrics",
-  description: "Full list of metrics collected by the OxiPulse agent.",
+  title: "Modules & Security Findings",
+  description: "Full list of security modules and finding event payloads for Ferro Sentry.",
 };
 
-const metrics = [
-  { name: "system.cpu.usage",        type: "Gauge",   unit: "%",    desc: "Overall CPU usage percentage across all cores" },
-  { name: "system.memory.used",      type: "Gauge",   unit: "bytes","desc": "RAM currently in use" },
-  { name: "system.memory.total",     type: "Gauge",   unit: "bytes","desc": "Total installed RAM" },
-  { name: "system.disk.used",        type: "Gauge",   unit: "bytes","desc": "Disk space used on the root partition" },
-  { name: "system.disk.total",       type: "Gauge",   unit: "bytes","desc": "Total disk capacity of the root partition" },
-  { name: "system.network.bytes_in", type: "Counter", unit: "bytes","desc": "Total bytes received across all interfaces" },
-  { name: "system.network.bytes_out",type: "Counter", unit: "bytes","desc": "Total bytes sent across all interfaces" },
+const modulesList = [
+  { name: "port_scanner",        status: "Available",        type: "Audit",    desc: "Audits listening interfaces, non-standard open ports, and unauthenticated exposed databases (Redis, Mongo)." },
+  { name: "vuln_scanner",        status: "Available",        type: "Posture",  desc: "Audits SSH configs (PermitRootLogin, PasswordAuth), SUID/SGID binary permissions, world-writable files." },
+  { name: "process_sentinel",    status: "In Development",   type: "EDR",      desc: "Real-time process spawn tracking, shell execution from /tmp, memory injection, dangling binary executables." },
+  { name: "file_integrity",      status: "In Development",   type: "FIM",      desc: "inotify / ReadDirectoryChangesW tracking of /etc/passwd and binaries with SHA-256 baselines." },
+  { name: "auth_guard",          status: "Roadmap",          type: "Logs",     desc: "SSH brute-force detection, auth.log tailing, and failed login attempt tracking." },
 ];
 
-export default function MetricsPage() {
+export default function ModulesPage() {
   return (
     <Prose>
-      <h1>Metrics</h1>
+      <h1>Modules & Security Findings</h1>
       <p>
-        The agent collects the following metrics on every collection interval (default 10s).
-        All metrics follow the <strong>OpenTelemetry semantic conventions</strong> and are exported
-        via OTLP.
+        Ferro Sentry executes security audit modules and streams posture findings to SecuryBlack Cloud or your OTLP collector.
       </p>
 
-      <h2>Metric reference</h2>
+      <h2>Module Reference & Status</h2>
 
       <div className="not-prose overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] my-6">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-[var(--color-border)] bg-[var(--color-surface)]">
-              <th className="text-left px-4 py-3 font-semibold text-[var(--color-text)]">Metric name</th>
-              <th className="text-left px-4 py-3 font-semibold text-[var(--color-text)]">Type</th>
-              <th className="text-left px-4 py-3 font-semibold text-[var(--color-text)]">Unit</th>
+              <th className="text-left px-4 py-3 font-semibold text-[var(--color-text)]">Module Name</th>
+              <th className="text-left px-4 py-3 font-semibold text-[var(--color-text)]">Status</th>
+              <th className="text-left px-4 py-3 font-semibold text-[var(--color-text)]">Category</th>
               <th className="text-left px-4 py-3 font-semibold text-[var(--color-text)]">Description</th>
             </tr>
           </thead>
           <tbody>
-            {metrics.map((m) => (
+            {modulesList.map((m) => (
               <tr key={m.name} className="border-b border-[var(--color-border)] last:border-0">
                 <td className="px-4 py-3 font-mono text-[var(--color-primary)] text-xs">{m.name}</td>
-                <td className="px-4 py-3 text-xs text-[var(--color-muted)]">{m.type}</td>
-                <td className="px-4 py-3 font-mono text-xs text-[var(--color-muted)]">{m.unit}</td>
+                <td className="px-4 py-3">
+                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${m.status === "Available" ? "bg-emerald-950 text-emerald-400 border border-emerald-800" : "bg-amber-950 text-amber-400 border border-amber-800"}`}>
+                    {m.status}
+                  </span>
+                </td>
+                <td className="px-4 py-3 font-mono text-xs text-[var(--color-muted)]">{m.type}</td>
                 <td className="px-4 py-3 text-sm text-[var(--color-muted)]">{m.desc}</td>
               </tr>
             ))}
@@ -52,63 +52,29 @@ export default function MetricsPage() {
         </table>
       </div>
 
-      <h2>OTLP payload example</h2>
+      <h2>Security Finding Payload Example</h2>
       <p>
-        Each batch sent to the collector looks like the following (simplified JSON representation):
+        Each posture finding emitted by Ferro Sentry follows this JSON structure:
       </p>
       <CodeBlock
         code={`{
-  "resource_metrics": [{
-    "resource": {
-      "attributes": {
-        "host.name": "my-server",
-        "os.type": "linux"
-      }
-    },
-    "scope_metrics": [{
-      "metrics": [
-        {
-          "name": "system.cpu.usage",
-          "gauge": { "data_points": [{ "as_double": 12.4, "time_unix_nano": 1700000000000000000 }] }
-        },
-        {
-          "name": "system.memory.used",
-          "gauge": { "data_points": [{ "as_int": 3328000000, "time_unix_nano": 1700000000000000000 }] }
-        }
-      ]
-    }]
-  }]
+  "event_type": "finding",
+  "category": "posture",
+  "severity": "high",
+  "timestamp": "2026-04-28T16:45:00Z",
+  "host": "web-server-01",
+  "agent": "ferro-sentry",
+  "module": "ssh_auditor",
+  "details": {
+    "finding": "PermitRootLogin=yes",
+    "recommendation": "Set PermitRootLogin=no in /etc/ssh/sshd_config",
+    "file": "/etc/ssh/sshd_config",
+    "benchmark": "CIS-5.2.8"
+  }
 }`}
         language="json"
-        filename="OTLP payload (simplified)"
+        filename="Security Finding (JSON)"
       />
-
-      <h2>Collection details</h2>
-      <ul>
-        <li>
-          <strong>CPU</strong> — read from <code>/proc/stat</code> (Linux) or{" "}
-          <code>GetSystemTimes</code> (Windows). Averaged across all logical cores.
-        </li>
-        <li>
-          <strong>Memory</strong> — read from <code>/proc/meminfo</code> (Linux) or{" "}
-          <code>GlobalMemoryStatusEx</code> (Windows).
-        </li>
-        <li>
-          <strong>Disk</strong> — read from <code>statvfs("/")</code> (Linux) or the system
-          drive (Windows). Only the root/system partition is measured in v0.1.
-        </li>
-        <li>
-          <strong>Network</strong> — cumulative counters from <code>/proc/net/dev</code> (Linux)
-          or <code>GetIfTable</code> (Windows). All interfaces are summed.
-        </li>
-      </ul>
-
-      <h2>Timestamps</h2>
-      <p>
-        Timestamps are generated at the <strong>moment of collection</strong>, not at the moment of
-        transmission. This ensures accurate time-series data even when the offline buffer replays
-        delayed batches.
-      </p>
     </Prose>
   );
 }

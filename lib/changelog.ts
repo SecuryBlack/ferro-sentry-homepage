@@ -13,372 +13,115 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
-    version: "0.3.5",
-    date: "2026-05-28",
-    type: "patch",
-    summary: "Add Cloudflare DNS as a default fallback latency target for instant out-of-the-box monitoring.",
-    sections: [
-      {
-        label: "Added",
-        items: [
-          "Cloudflare DNS (1.1.1.1:53) is now automatically included as a default latency target when `latency_targets` is empty. This provides immediate, zero-config internet connection latency monitoring alongside the ingestor endpoint.",
-        ],
-      },
-    ],
-  },
-  {
-    version: "0.3.4",
-    date: "2026-05-28",
-    type: "minor",
-    summary: "Dynamic network latency metrics via concurrent, non-privileged TCP pings.",
-    sections: [
-      {
-        label: "Added",
-        items: [
-          "Network latency metric (`system.network.latency`) with `target` and `status` attributes.",
-          "Asynchronous concurrent TCP ping mechanism to measure latencies of multiple targets in parallel without blocking the main telemetry loop.",
-          "New `latency_targets` configuration key (and `OXIPULSE_LATENCY_TARGETS` environment variable) to define a custom list of hosts/ports to monitor.",
-          "Automatic fallback to measure latency to the configured OTLP ingestor endpoint if no custom targets are specified.",
-        ],
-      },
-      {
-        label: "Fixed",
-        items: [
-          "Robust logging setup on Windows — automatically falls back to console logging (stdout) if the daily rolling log directory (`C:\\ProgramData\\oxipulse`) lacks write permissions or if `OXIPULSE_LOG_STDOUT` is enabled, eliminating start panics.",
-        ],
-      },
-    ],
-  },
-  {
-    version: "0.3.3",
-    date: "2026-05-20",
-    type: "patch",
-    summary: "Use short device names for Linux disks.",
-    sections: [
-      {
-        label: "Fixed",
-        items: [
-          "Linux disk monitoring now uses short, clean device names instead of absolute sysfs paths.",
-        ],
-      },
-    ],
-  },
-  {
-    version: "0.3.2",
-    date: "2026-05-14",
-    type: "patch",
-    summary: "Improve disk labeling for Windows and Linux mount points.",
-    sections: [
-      {
-        label: "Fixed",
-        items: [
-          "Uses the mount point as the primary disk label (e.g., `C:` on Windows, `/` on Linux) to make individual disk metrics clear in the dashboard.",
-        ],
-      },
-    ],
-  },
-  {
-    version: "0.3.1",
-    date: "2026-05-13",
-    type: "patch",
-    summary: "Disk label fallback improvement on Linux.",
-    sections: [
-      {
-        label: "Fixed",
-        items: [
-          "Fallback to using mount points as the disk name when the standard disk label attribute is empty on Linux filesystems.",
-        ],
-      },
-    ],
-  },
-  {
-    version: "0.3.0",
-    date: "2026-05-13",
-    type: "minor",
-    summary: "Granular per-disk telemetries utilizing OTel semantic conventions.",
-    sections: [
-      {
-        label: "Added",
-        items: [
-          "Per-disk metric reporting attaching the OTel standard `disk.name` attribute on disk used and total indicators, enabling multiple disk visualization.",
-        ],
-      },
-    ],
-  },
-  {
-    version: "0.2.0",
-    date: "2026-05-11",
-    type: "minor",
-    summary: "Telemetry pings now report agent type.",
-    sections: [
-      {
-        label: "Added",
-        items: [
-          "Attaches the `agent_type` field to the daily opt-in usage telemetry pings to separate different agent kinds.",
-        ],
-      },
-    ],
-  },
-  {
-    version: "0.1.15",
-    date: "2026-05-11",
-    type: "patch",
-    summary: "Add local version flag for easy agent discovery.",
-    sections: [
-      {
-        label: "Added",
-        items: [
-          "Introduced `--version` and `-V` CLI flags to allow developers and scripts to easily retrieve the installed agent version locally.",
-        ],
-      },
-    ],
-  },
-  {
-    version: "0.1.14",
-    date: "2026-05-11",
-    type: "minor",
-    summary: "Real-time network throughput instead of raw total counters.",
-    sections: [
-      {
-        label: "Changed",
-        items: [
-          "Modified network metrics to calculate and report real-time throughput in bytes per second (`net_bps_in` and `net_bps_out`) rather than aggregate raw totals.",
-        ],
-      },
-    ],
-  },
-  {
-    version: "0.1.13",
-    date: "2026-05-09",
-    type: "patch",
-    summary: "Documentation cleanups and minor updates.",
-    sections: [
-      {
-        label: "Changed",
-        items: [
-          "Polished internal README guidelines, documentation files, and minor repository adjustments.",
-        ],
-      },
-    ],
-  },
-  {
-    version: "0.1.12",
-    date: "2026-05-08",
-    type: "patch",
-    summary: "Typo corrections in changelog history.",
-    sections: [
-      {
-        label: "Fixed",
-        items: [
-          "Corrected minor version typos and adjusted dates in the OxiPulse changelog history.",
-        ],
-      },
-    ],
-  },
-  {
-    version: "0.1.11",
-    date: "2026-05-08",
-    type: "minor",
-    summary: "Local agent mode for nexus-agent tunnel integration, and critical Windows fixes.",
-    sections: [
-      {
-        label: "Added",
-        items: [
-          "New `local_agent` deployment mode in config to route OTLP payloads locally to the `nexus-agent` gRPC tunnel client.",
-        ],
-      },
-      {
-        label: "Fixed",
-        items: [
-          "Eliminated the `VCRUNTIME140.dll` dependency on Windows by statically linking the MSVC runtime inside release builds.",
-          "Windows installer now stops any running agent service before overwriting the executable, resolving locked file errors.",
-        ],
-      },
-    ],
-  },
-  {
-    version: "0.1.10",
-    date: "2026-04-06",
-    type: "patch",
-    summary: "Update checks now happen 5 minutes after startup instead of 24 hours.",
-    sections: [
-      {
-        label: "Fixed",
-        items: [
-          "The auto-updater previously waited a full 24 hours before its first check, so restarting the agent never triggered a prompt update pickup. The agent now checks for a new release 5 minutes after startup and then every 24 hours, meaning a restart is enough to pull a pending update within minutes.",
-        ],
-      },
-    ],
-  },
-  {
-    version: "0.1.9",
-    date: "2026-04-06",
-    type: "minor",
-    summary: "Opt-in usage telemetry and remote configuration.",
-    sections: [
-      {
-        label: "Added",
-        items: [
-          "Opt-in usage telemetry — the agent can now send anonymous usage pings (version, OS, arch, uptime, metrics exported, buffer occupancy) to SecuryBlack once every 24 hours. Disabled by default for all installations, including agents upgrading from previous versions.",
-          "Remote configuration fetch — on startup the agent calls the SecuryBlack API with its token to retrieve server-side settings. This allows telemetry to be enabled or disabled per agent from the dashboard without touching the local config file.",
-          "New config key `telemetry_enabled` (absent → defers to server, `true` → always on, `false` → always off) and corresponding `OXIPULSE_TELEMETRY` environment variable override.",
-          "New optional config key `api_url` and `OXIPULSE_API_URL` environment variable for self-hosted or staging deployments.",
-        ],
-      },
-    ],
-  },
-  {
-    version: "0.1.8",
-    date: "2026-04-05",
-    type: "patch",
-    summary: "Report agent version as an OTLP resource attribute and update TLS dependencies.",
-    sections: [
-      {
-        label: "Added",
-        items: [
-          "Agent version is now attached as the `service.version` resource attribute in every OTLP export, allowing the ingestor to track which version of OxiPulse each agent is running.",
-        ],
-      },
-      {
-        label: "Changed",
-        items: [
-          "Updated `rustls-webpki` to the latest patch release (security maintenance).",
-        ],
-      },
-    ],
-  },
-  {
-    version: "0.1.7",
-    date: "2026-03-27",
-    type: "patch",
-    summary: "Dependency lockfile cleanup following 0.1.6.",
-    sections: [
-      {
-        label: "Changed",
-        items: [
-          "Updated Cargo.lock to fully reflect the dependency changes shipped in 0.1.6. No functional changes.",
-        ],
-      },
-    ],
-  },
-  {
     version: "0.1.6",
-    date: "2026-03-27",
+    date: "2026-07-21",
     type: "patch",
-    summary: "Connectivity, installer fixes and a security dependency update.",
+    summary: "Implement gRPC client communication to sb-agent / Nexus Agent via tonic and SecurityService.",
     sections: [
       {
-        label: "Fixed",
+        label: "Added",
         items: [
-          "Reachability check now tries IPv4 addresses before IPv6, preventing long stalls when the ingestor host has no IPv6 listener.",
-          "Linux install script reads TTY input via `/dev/tty` so the installer works correctly when executed through a pipe (`curl … | bash`).",
-          "Windows install script uses the `PROCESSOR_ARCHITECTURE` environment variable for architecture detection instead of .NET `RuntimeInformation`, improving compatibility across environments.",
+          "gRPC Client Output mode (`SbAgentOutput`) via tonic and `tunnel.proto` Protobuf definitions.",
+          "Automatic finding streaming to Nexus Agent on port 4317 multiplexed into `TunnelEnvelope_SecurityEventPayload` envelopes.",
         ],
       },
       {
-        label: "Changed",
+        label: "Security",
         items: [
-          "Updated `tar` dependency to the latest patch release (security maintenance).",
+          "Enforced TLS 1.3 encrypted tunnel transmission for security event ingestion.",
         ],
       },
     ],
   },
   {
     version: "0.1.5",
-    date: "2026-03-19",
+    date: "2026-07-15",
     type: "patch",
-    summary: "Maintenance release with updated dependencies.",
+    summary: "Fix TOML escape sequence bug on Windows operating systems.",
     sections: [
       {
-        label: "Changed",
+        label: "Fixed",
         items: [
-          "Updated Cargo.lock to keep dependencies in sync with the published crate.",
+          "Normalized file path strings using forward slashes in `local_file_path` configuration parsing to prevent TOML escape character panics.",
         ],
       },
     ],
   },
   {
     version: "0.1.4",
-    date: "2026-03-19",
+    date: "2026-07-08",
     type: "patch",
-    summary: "Critical TLS fixes for agents connecting to HTTPS ingestors.",
+    summary: "Implement Windows Service controller and fix installer path mismatches.",
     sections: [
+      {
+        label: "Added",
+        items: [
+          "Native Windows Service wrapper using the `windows-service` crate for silent execution under Windows Service Control Manager (SCM).",
+        ],
+      },
       {
         label: "Fixed",
         items: [
-          "Enabled explicit TLS in the OTLP exporter so metrics are correctly delivered over HTTPS endpoints.",
-          "Activated TLS in the tonic transport layer to resolve connection failures when the ingestor is behind HTTPS.",
+          "Corrected binary installation directory path mismatches in `install.ps1` for Windows SCM registration.",
         ],
       },
     ],
   },
   {
     version: "0.1.3",
-    date: "2026-03-15",
+    date: "2026-07-02",
     type: "patch",
-    summary: "Fix reachability check port for HTTPS ingestor endpoints.",
+    summary: "Fix SecureString decoding in install.ps1 and update REST API endpoint.",
     sections: [
       {
         label: "Fixed",
         items: [
-          "Reachability pre-check now uses port 443 when the configured OTLP endpoint scheme is https://, preventing false \"unreachable\" results on standard HTTPS deployments.",
+          "Fixed `SecureString` decoding in PowerShell installer script (`install.ps1`) by avoiding improper string type coercion.",
         ],
       },
     ],
   },
   {
     version: "0.1.2",
-    date: "2026-03-15",
+    date: "2026-06-25",
     type: "patch",
-    summary: "Fix file logging in Windows Service mode and improve offline reconnection.",
+    summary: "Update direct REST API output endpoint path.",
     sections: [
       {
-        label: "Fixed",
+        label: "Changed",
         items: [
-          "Log output is now written to disk when the agent runs as a Windows Service (previously only visible in interactive mode).",
-          "Offline reconnection logic corrected — agent resumes sending buffered metrics as soon as the ingestor becomes reachable again.",
+          "Updated direct REST API output ingestion endpoint to `/agents/me/security-events`.",
         ],
       },
     ],
   },
   {
     version: "0.1.1",
-    date: "2026-03-14",
+    date: "2026-06-10",
     type: "patch",
-    summary: "Windows Service integration and installer fix for non-English locales.",
+    summary: "Fix cross-compilation build target issues.",
     sections: [
-      {
-        label: "Added",
-        items: [
-          "Native Windows Service Manager integration — the agent can now be installed, started, stopped and uninstalled as a proper Windows Service via the PowerShell installer.",
-        ],
-      },
       {
         label: "Fixed",
         items: [
-          "Windows installer now uses well-known SIDs when setting ACL permissions, fixing failures on systems with non-English locale account names.",
+          "Disabled default OpenSSL features in `reqwest` and enabled `rustls-tls` for smooth cross-compilation across Linux and Windows targets.",
         ],
       },
     ],
   },
   {
     version: "0.1.0",
-    date: "2025-03-01",
+    date: "2026-05-15",
     type: "minor",
-    summary: "Initial public release. Ultralight telemetry agent for Linux and Windows.",
+    summary: "Initial release of Ferro Sentry security agent and GitHub Actions release workflow.",
     sections: [
       {
         label: "Added",
         items: [
-          "CPU, RAM, disk and network metric collection via native OS APIs",
-          "OTLP/gRPC export with configurable endpoint and interval",
-          "Offline buffer — metrics persisted to disk when collector is unreachable",
-          "Auto-update — daily check against GitHub Releases with SHA256 verification",
-          "One-line install script for Linux (curl | bash) with systemd service registration",
-          "One-line install script for Windows (irm | iex) with Windows Service registration",
-          "Support for x86_64 and ARM64 on Linux; x86_64 on Windows",
-          "Configuration via environment variables or config.toml file",
-          "Apache 2.0 license",
+          "Core Event Engine with deduplication, severity scoring, and rate-limiting throttles.",
+          "Port Scanner module (`port_scanner.rs`) for detecting listening interfaces and unauthenticated database exposures.",
+          "Vulnerability Scanner module (`vuln_scanner.rs`) for SSH configuration checks and SUID permission auditing.",
+          "GitHub Actions workflow for automated cross-compilation of Linux (x86_64, arm64) and Windows (x86_64) binaries.",
         ],
       },
     ],

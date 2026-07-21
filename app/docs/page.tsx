@@ -30,19 +30,35 @@ export default function DocsIntroduction() {
         Ferro Sentry is compiled to a static Rust binary (~2 MB) with <strong>less than 0.1% CPU overhead</strong>, ensuring active threat detection without sacrificing VPS performance.
       </p>
 
-      <h2>How it works</h2>
-      <p>
-        The agent runs dedicated sensor modules in asynchronous Tokio tasks to audit system events, monitor critical files via inotify / ReadDirectoryChangesW, check SSH/firewall posture, and forward security envelopes to the local Nexus Agent via gRPC at <code>127.0.0.1:4317</code>.
-      </p>
-
-      <h2>Core Modules</h2>
+      <h2>Core Modules & Status</h2>
       <p>Ferro Sentry provides two main categories of modules:</p>
+      
+      <h3>✅ Currently Available</h3>
       <ul>
         <li>
-          <strong>Real-Time EDR Sensors</strong> — Process Sentinel, File Integrity Monitor (FIM), Network Watch, Auth Guard, Persistence Hunter, and Log Watcher.
+          <strong>Port & Listener Auditor</strong> — Active SYN & TCP scanning of local interfaces, open ports, and database exposures (MongoDB, Redis, Elasticsearch).
         </li>
         <li>
-          <strong>Posture & Compliance Scanners</strong> — Port Scanner, Firewall Auditor, Vulnerability Scanner, SSH Auditor, Permission Auditor, and Secrets Hunter.
+          <strong>Posture & Vulnerability Scanner</strong> — Active auditing for SSH settings (PermitRootLogin, PasswordAuth), SUID/SGID suspicious binary permissions, and basic CVE exposures.
+        </li>
+        <li>
+          <strong>gRPC Event Engine</strong> — Deduplication, severity scoring, rate-limiting, and local gRPC tunnel multiplexing with Nexus Agent on port <code>4317</code>.
+        </li>
+      </ul>
+
+      <h3>🚧 In Development / Roadmap</h3>
+      <ul>
+        <li>
+          <strong>Process Sentinel (EDR)</strong> — Process execution tracking, shell children, `/tmp` launches, hidden PIDs, and memory injection alerts.
+        </li>
+        <li>
+          <strong>File Integrity Monitor (FIM)</strong> — Real-time inotify file modification alerts for system files (`/etc/passwd`, binaries) with SHA-256 baseline snapshots.
+        </li>
+        <li>
+          <strong>Auth Guard & Log Watcher</strong> — Real-time system log tailing (`auth.log`, `journald`, EventLog) and SSH brute-force detection.
+        </li>
+        <li>
+          <strong>Persistence Hunter & YARA Scanner</strong> — Cron job audit, systemd service tampering, and YARA signature scanning.
         </li>
       </ul>
 

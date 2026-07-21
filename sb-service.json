@@ -1,8 +1,8 @@
 {
-  "name": "OxiPulse Homepage",
-  "description": "Sitio web y documentación de OxiPulse en Next.js",
+  "name": "Ferro Sentry Homepage",
+  "description": "Sitio web y documentación de Ferro Sentry en Next.js",
   "type": "next",
   "role": "homepage",
-  "port": 3004,
+  "port": 3006,
   "start": "npm run dev"
 }

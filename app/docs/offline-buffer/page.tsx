@@ -5,7 +5,7 @@ import { Callout } from "@/components/ui/Callout";
 
 export const metadata: Metadata = {
   title: "Offline Buffer",
-  description: "How OxiPulse handles connectivity loss without dropping metrics.",
+  description: "How Ferro Sentry handles connectivity loss without dropping security findings.",
 };
 
 export default function OfflineBufferPage() {
@@ -13,16 +13,15 @@ export default function OfflineBufferPage() {
     <Prose>
       <h1>Offline buffer</h1>
       <p>
-        OxiPulse is designed to never lose metrics due to temporary network failures. When the
-        OTLP endpoint is unreachable, the agent automatically switches to a local disk buffer
+        Ferro Sentry is designed to never lose security events or posture findings due to temporary network failures. When the
+        local Nexus Agent or cloud endpoint is unreachable, the agent automatically switches to a local disk buffer
         and replays accumulated data once connectivity is restored.
       </p>
 
       <h2>How it works</h2>
       <ol>
         <li>
-          On each collection tick, the agent attempts to send the metrics batch to the configured
-          endpoint.
+          On each security finding or audit tick, the agent attempts to send event envelopes to the configured endpoint.
         </li>
         <li>
           If the send fails (connection refused, timeout, DNS failure), the batch is written to a
@@ -33,50 +32,37 @@ export default function OfflineBufferPage() {
           resuming normal operation.
         </li>
         <li>
-          If the buffer reaches the configured maximum size (<code>OXIPULSE_BUFFER_MAX_MB</code>,
-          default 100 MB), the oldest batches are dropped to make room for new ones.
+          If the buffer reaches the configured maximum size (<code>FERROSENTRY_BUFFER_MAX_MB</code>,
+          default 100 MB), the oldest events are dropped to make room for new threat alerts.
         </li>
       </ol>
 
       <Callout variant="info">
-        Metrics in the buffer retain their original timestamps, so your time-series data remains
-        accurate even after a long offline period.
+        Security findings in the buffer retain their original event timestamps, ensuring historical audit accuracy even after network outages.
       </Callout>
 
       <h2>Buffer location</h2>
       <p>Default locations by platform:</p>
       <ul>
-        <li>Linux: <code>/var/lib/oxipulse/buffer/</code></li>
-        <li>Windows: <code>C:\ProgramData\OxiPulse\buffer\</code></li>
+        <li>Linux: <code>/var/lib/ferrosentry/buffer/</code></li>
+        <li>Windows: <code>C:\ProgramData\ferro-sentry\buffer\</code></li>
       </ul>
-      <p>Override with the <code>OXIPULSE_BUFFER_PATH</code> environment variable:</p>
+      <p>Override with the <code>FERROSENTRY_BUFFER_PATH</code> environment variable:</p>
       <CodeBlock
-        code={`OXIPULSE_BUFFER_PATH=/data/oxipulse/buffer`}
+        code={`FERROSENTRY_BUFFER_PATH=/data/ferrosentry/buffer`}
         language="bash"
       />
 
       <h2>Monitoring buffer state</h2>
       <p>The agent logs buffer activity at <code>info</code> level:</p>
       <CodeBlock
-        code={`INFO oxipulse: endpoint unreachable, buffering metrics (buffer: 12 MB / 100 MB)
-INFO oxipulse: connection restored, replaying 47 buffered batches
-INFO oxipulse: buffer drained, resuming normal operation`}
+        code={`INFO ferro_sentry: endpoint unreachable, buffering findings (buffer: 4 MB / 100 MB)
+INFO ferro_sentry: connection restored, replaying 12 buffered event batches
+INFO ferro_sentry: buffer drained, resuming live stream`}
         language="bash"
         filename="Log output"
         showCopy={false}
       />
-
-      <h2>Disk space considerations</h2>
-      <p>
-        At the default 10-second interval, one batch is approximately <strong>1–3 KB</strong>.
-        The default 100 MB buffer can hold roughly <strong>8–24 hours</strong> of metrics before
-        the oldest data starts being dropped.
-      </p>
-
-      <Callout variant="warning">
-        Ensure the buffer directory is on a partition with sufficient free space, especially for
-        servers that may experience extended offline periods.
-      </Callout>
     </Prose>
   );
 }

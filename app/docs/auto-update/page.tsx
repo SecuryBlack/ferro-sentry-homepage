@@ -5,7 +5,7 @@ import { Callout } from "@/components/ui/Callout";
 
 export const metadata: Metadata = {
   title: "Auto-Update",
-  description: "How the OxiPulse agent updates itself automatically from GitHub Releases.",
+  description: "How the Ferro Sentry agent updates itself automatically from GitHub Releases.",
 };
 
 export default function AutoUpdatePage() {
@@ -13,7 +13,7 @@ export default function AutoUpdatePage() {
     <Prose>
       <h1>Auto-update</h1>
       <p>
-        OxiPulse includes a built-in self-update mechanism. Once per day, the agent checks the
+        Ferro Sentry includes a built-in self-update mechanism. The agent performs an initial update check <strong>1 minute after startup</strong> and subsequently checks once per day on the
         GitHub Releases page for a newer version. If one is found, it downloads the correct binary
         for the current platform, replaces itself on disk, and exits cleanly so the system service
         manager can restart it.
@@ -22,8 +22,7 @@ export default function AutoUpdatePage() {
       <h2>Update flow</h2>
       <ol>
         <li>
-          Agent checks <code>https://api.github.com/repos/securyblack/oxi-pulse/releases/latest</code>{" "}
-          once per day.
+          Agent performs an initial check <code>1 minute after startup</code> and then every 24 hours against <code>https://api.github.com/repos/securyblack/ferro-sentry/releases/latest</code>.
         </li>
         <li>
           Compares the remote version tag against the current binary version using semantic
@@ -53,11 +52,11 @@ export default function AutoUpdatePage() {
 
       <h2>Logs</h2>
       <CodeBlock
-        code={`INFO oxipulse::updater: checking for updates (current: v0.1.0)
-INFO oxipulse::updater: new version available: v0.2.0
-INFO oxipulse::updater: downloading oxipulse-linux-x86_64 v0.2.0
-INFO oxipulse::updater: checksum verified, replacing binary
-INFO oxipulse::updater: update complete, restarting`}
+        code={`INFO ferro_sentry::updater: initial check in 1 min (current: v0.1.6)
+INFO ferro_sentry::updater: new version available: v0.2.0
+INFO ferro_sentry::updater: downloading ferro-sentry-linux-x86_64 v0.2.0
+INFO ferro_sentry::updater: checksum verified, replacing binary
+INFO ferro_sentry::updater: update complete, restarting`}
         language="bash"
         filename="Update log output"
         showCopy={false}
@@ -70,7 +69,7 @@ INFO oxipulse::updater: update complete, restarting`}
       </p>
       <CodeBlock
         code={`# Environment variable
-OXIPULSE_AUTO_UPDATE=false
+FERROSENTRY_AUTO_UPDATE=false
 
 # Or in config.toml
 auto_update = false`}
@@ -84,10 +83,10 @@ auto_update = false`}
       </p>
       <CodeBlock
         code={`# Linux
-OXIPULSE_VERSION=v0.1.0 curl -fsSL https://install.oxipulse.dev | sudo bash
+FERROSENTRY_VERSION=v0.1.6 curl -fsSL https://install.ferrosentry.dev | sudo bash
 
 # Windows
-$env:OXIPULSE_VERSION="v0.1.0"; irm https://install.oxipulse.dev/windows | iex`}
+$env:FERROSENTRY_VERSION="v0.1.6"; irm https://install.ferrosentry.dev/windows | iex`}
         language="bash"
       />
 
