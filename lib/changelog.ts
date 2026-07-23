@@ -13,6 +13,32 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "0.2.0",
+    date: "2026-07-23",
+    type: "minor",
+    summary: "Comprehensive Security Posture Suite: SSH Auditor, File Integrity Monitor (FIM), SUID Permission Auditor, Persistence Hunter, Process Sentinel, Firewall, and SSL/TLS Auditor.",
+    sections: [
+      {
+        label: "Added",
+        items: [
+          "SSH Auditor module (`ssh_auditor.rs`): Audits sshd_config settings (PermitRootLogin, PasswordAuthentication, custom port, X11Forwarding, MaxAuthTries).",
+          "File Integrity Monitor (`fim.rs`): Baseline SHA-256 integrity hashing for critical files (/etc/passwd, /etc/shadow, /etc/sudoers, /etc/hosts).",
+          "Permission Auditor (`permission_auditor.rs`): Audits SUID/SGID binaries in temporary paths and world-writable configuration files in /etc.",
+          "Persistence Hunter (`persistence_hunter.rs`): Scans system cron entries (/etc/crontab, /etc/cron.d) for unauthorized commands or external downloaders.",
+          "Process Sentinel (`process_sentinel.rs`): Scans running processes for executions from /tmp and unlinked/deleted binary handles.",
+          "Firewall Auditor (`firewall_auditor.rs`): Audits UFW status and default iptables ACCEPT policies.",
+          "SSL/TLS Auditor (`ssl_auditor.rs`): Audits Let's Encrypt certificates and expiry dates.",
+        ],
+      },
+      {
+        label: "Security",
+        items: [
+          "Enhanced security posture coverage and real-time detection capabilities across all 7 sensor modules.",
+        ],
+      },
+    ],
+  },
+  {
     version: "0.1.6",
     date: "2026-07-21",
     type: "patch",
