@@ -6,7 +6,7 @@ import { Terminal, MonitorDown } from "lucide-react";
 import { CodeBlock } from "@/components/ui/CodeBlock";
 
 const tabs = [
-  { id: "linux", label: "Linux / macOS", icon: Terminal },
+  { id: "linux", label: "Linux", icon: Terminal },
   { id: "windows", label: "Windows", icon: MonitorDown },
 ] as const;
 

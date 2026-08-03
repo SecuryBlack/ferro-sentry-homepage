@@ -10,12 +10,12 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/Tabs";
 export const metadata: Metadata = {
   title: "Install",
   description:
-    "Install Ferro Sentry on any Linux, macOS or Windows server in under 60 seconds with a single command.",
+    "Install Ferro Sentry on any Linux or Windows server in under 60 seconds with a single command.",
 };
 
 const platforms = [
-  { os: "Linux", arch: "x86_64 (amd64)", status: "stable", binary: "ferro-sentry-linux-x86_64" },
-  { os: "Linux", arch: "ARM64 (aarch64)", status: "stable", binary: "ferro-sentry-linux-arm64" },
+  { os: "Linux (Ubuntu, Debian)", arch: "x86_64 (amd64)", status: "stable", binary: "ferro-sentry-linux-x86_64" },
+  { os: "Linux (Ubuntu, Debian)", arch: "ARM64 (aarch64)", status: "stable", binary: "ferro-sentry-linux-arm64" },
   { os: "Windows", arch: "x86_64", status: "stable", binary: "ferro-sentry-windows-x86_64.exe" },
   { os: "Windows", arch: "ARM64", status: "beta", binary: "ferro-sentry-windows-arm64.exe" },
   { os: "macOS", arch: "x86_64", status: "coming-soon", binary: "—" },
@@ -176,7 +176,7 @@ export default function InstallPage() {
             <TabsList>
               <TabsTrigger value="linux">
                 <Terminal size={14} />
-                Linux / macOS
+                Linux
               </TabsTrigger>
               <TabsTrigger value="windows">
                 <MonitorDown size={14} />

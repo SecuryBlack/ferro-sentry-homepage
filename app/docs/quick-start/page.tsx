@@ -29,7 +29,7 @@ export default function QuickStart() {
       </Callout>
 
       <h2>Step 2 — Install the agent</h2>
-      <h3>Linux / macOS</h3>
+      <h3>Linux</h3>
       <CodeBlock
         code={`curl -fsSL https://install.ferrosentry.dev | sudo bash`}
         language="bash"

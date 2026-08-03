@@ -117,7 +117,7 @@ export function Hero() {
           custom={0.4}
           className="w-full max-w-xl"
         >
-          <CodeBlock code={INSTALL_CMD} language="bash" filename="Linux / macOS" />
+          <CodeBlock code={INSTALL_CMD} language="bash" filename="Linux" />
           <p className="text-xs text-[var(--color-muted)] mt-2">
             Also available for{" "}
             <a href="/install#windows" className="text-[var(--color-primary)] hover:underline">
