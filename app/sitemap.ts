@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/blog";
 
-const BASE_URL = "https://oxipulse.dev";
+const BASE_URL = "https://ferrosentry.dev";
 
 const STATIC_ROUTES: Array<{
   path: string;
@@ -16,6 +16,7 @@ const STATIC_ROUTES: Array<{
   { path: "/docs/metrics",         changeFrequency: "monthly", priority: 0.7  },
   { path: "/docs/offline-buffer",  changeFrequency: "monthly", priority: 0.7  },
   { path: "/docs/auto-update",     changeFrequency: "monthly", priority: 0.7  },
+  { path: "/docs/cli",             changeFrequency: "monthly", priority: 0.7  },
   { path: "/docs/contributing",    changeFrequency: "monthly", priority: 0.6  },
   { path: "/changelog",    changeFrequency: "weekly",  priority: 0.65 },
   { path: "/blog",         changeFrequency: "weekly",  priority: 0.65 },

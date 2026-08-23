@@ -9,7 +9,7 @@ export const dynamic = "force-static";
 
 export const metadata: Metadata = {
   title: "Blog",
-  description: "Articles and updates from the OxiPulse team.",
+  description: "Articles and updates from the Ferro Sentry team.",
 };
 
 export default function BlogPage() {

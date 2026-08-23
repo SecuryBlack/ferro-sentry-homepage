@@ -13,6 +13,62 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "0.2.3",
+    date: "2026-08-23",
+    type: "patch",
+    summary: "Consume sb-agent-core from crates.io instead of a git dependency.",
+    sections: [
+      {
+        label: "Changed",
+        items: [
+          "The shared `sb-agent-core` runtime is now pulled from crates.io as a versioned dependency instead of a git branch reference, matching normal Rust dependency practice.",
+        ],
+      },
+    ],
+  },
+  {
+    version: "0.2.2",
+    date: "2026-08-23",
+    type: "minor",
+    summary: "Retrofitted onto sb-agent-core: shared config, logging, service wrapper, updater and a new local status socket + TUI.",
+    sections: [
+      {
+        label: "Added",
+        items: [
+          "New local `status` and `top` CLI commands — `status` prints a JSON snapshot of the running agent (state, version, last scan time); `top` opens a live-refreshing terminal view of the same data. See the CLI & live status docs page.",
+          "Status socket (Unix socket / Windows named pipe) that Nexus Agent now reads directly to detect whether FerroSentry is running, instead of relying on process/PATH heuristics.",
+        ],
+      },
+      {
+        label: "Fixed",
+        items: [
+          "The `log_level` setting in `config.toml` was loaded but never actually applied — logging always ran at the hardcoded default level regardless of configuration. Config is now loaded before logging initializes, so `log_level` takes effect as documented.",
+        ],
+      },
+      {
+        label: "Changed",
+        items: [
+          "Config loading, logging, the Windows Service wrapper, and the GitHub-Releases auto-updater now come from the shared `sb-agent-core` crate used by all SecuryBlack Rust agents, instead of duplicated per-agent code.",
+        ],
+      },
+    ],
+  },
+  {
+    version: "0.2.1",
+    date: "2026-07-23",
+    type: "patch",
+    summary: "Auto-update daily check and SCM service restart policy.",
+    sections: [
+      {
+        label: "Added",
+        items: [
+          "Daily auto-update check against GitHub Releases, matching the behavior already shipped in OxiPulse and Nexus Agent.",
+          "Windows Service Manager restart policy so the service recovers automatically after an update or a crash.",
+        ],
+      },
+    ],
+  },
+  {
     version: "0.2.0",
     date: "2026-07-23",
     type: "minor",
