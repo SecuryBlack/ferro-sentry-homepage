@@ -13,6 +13,87 @@ export interface ChangelogEntry {
 
 export const changelog: ChangelogEntry[] = [
   {
+    version: "0.2.15",
+    date: "2026-09-13",
+    type: "patch",
+    summary: "Consolidate findings by executable in Process Sentinel, scan cache reset, and well-known Windows port rules.",
+    sections: [
+      {
+        label: "Fixed",
+        items: [
+          "Process Sentinel now consolidates findings by executable path instead of PID, preventing duplicate alerts across process restarts.",
+          "Added scan cache reset mechanism so manual or periodic rescans re-evaluate active state cleanly.",
+          "Eliminated test mock events from security scans and added well-known Windows system ports (RPC, NetBIOS, SMB) to avoid false positives.",
+        ],
+      },
+    ],
+  },
+  {
+    version: "0.2.14",
+    date: "2026-09-13",
+    type: "patch",
+    summary: "Auto-resolve terminated processes and dynamic state transitions in Process Sentinel.",
+    sections: [
+      {
+        label: "Added",
+        items: [
+          "Process Sentinel automatically detects when a flagged suspicious process terminates and emits a resolution event to clear the finding.",
+          "Support for dynamic security finding state transitions and automated resolution dispatch through the local agent tunnel.",
+        ],
+      },
+    ],
+  },
+  {
+    version: "0.2.13",
+    date: "2026-09-08",
+    type: "patch",
+    summary: "Windows static CRT runtime and Windows Server 2019 installer compatibility.",
+    sections: [
+      {
+        label: "Fixed",
+        items: [
+          "Enabled static CRT linking (`windows-static-crt`) on Windows x86_64 MSVC targets, eliminating Visual C++ Redistributable runtime dependency.",
+          "PowerShell installer now explicitly forces TLS 1.2+ and sets execution policy bypass for compatibility with Windows Server 2019 and PowerShell 5.1.",
+        ],
+      },
+    ],
+  },
+  {
+    version: "0.2.11",
+    date: "2026-08-25",
+    type: "minor",
+    summary: "Intrusion prevention, authentication monitoring, sudo logging and auto-upgrades posture rules.",
+    sections: [
+      {
+        label: "Added",
+        items: [
+          "New security audit rules: checks for active intrusion prevention (Fail2ban/CrowdSec), system authentication monitoring, sudo command logging, and unattended security upgrades.",
+        ],
+      },
+    ],
+  },
+  {
+    version: "0.2.10",
+    date: "2026-08-24",
+    type: "minor",
+    summary: "Remote command intake for one-click updates and direct token synchronization.",
+    sections: [
+      {
+        label: "Added",
+        items: [
+          "Remote command intake support: added `update_now` handler enabling one-click manual updates triggered from the SecuryBlack App.",
+          "New `sync_direct_token` command handler to synchronize direct API tokens securely without daemon restart.",
+        ],
+      },
+      {
+        label: "Fixed",
+        items: [
+          "Findings now automatically resolve when the underlying insecure condition is rectified on the server.",
+        ],
+      },
+    ],
+  },
+  {
     version: "0.2.3",
     date: "2026-08-23",
     type: "patch",
