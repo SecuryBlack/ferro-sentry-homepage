@@ -2,7 +2,7 @@
   "name": "ferro-sentry-homepage",
   "version": "0.1.0",
   "private": true,
-  "description": "Landing page oficial de ferro-sentry (SecuryBlack)",
+  "description": "Official landing page for ferro-sentry (SecuryBlack)",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
