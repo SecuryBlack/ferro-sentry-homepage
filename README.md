@@ -19,7 +19,7 @@ npm run build:cf
 
 ## 🛠️ Configuration
 
-Agent copy, metrics, and terminal simulation settings are configured in `config/agent.config.ts`.
+Agent copy is configured in `config/agent.config.ts`. Every claim must match the agent code.
 
 ## 📄 License
 

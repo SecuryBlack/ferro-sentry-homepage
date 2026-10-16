@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { activeAgentConfig } from "@/config/agent.config";
 import { Badge } from "@/components/catalyst/badge";
-import { ProductShowcase } from "./ProductShowcase";
 import { track } from "@/lib/analytics";
 import { Copy, Check, Terminal as TerminalIcon, Sparkles } from "lucide-react";
 
@@ -86,9 +85,14 @@ export function Hero() {
                   </button>
                 ))}
               </div>
-              <span className="text-[11px] text-zinc-400 font-mono hidden sm:inline">
-                Zero external dependencies
-              </span>
+              <a
+                href={`https://github.com/securyblack/ferro-sentry/blob/main/scripts/${activeCommand.os === "Windows" ? "install.ps1" : "install.sh"}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[11px] text-zinc-400 hover:text-zinc-200 font-mono hidden sm:inline"
+              >
+                Read the script first
+              </a>
             </div>
 
             {/* Code Line */}
@@ -109,11 +113,13 @@ export function Hero() {
                 )}
               </button>
             </div>
+            {activeCommand.note && (
+              <div className="px-3.5 pb-3 -mt-1 text-[11px] text-zinc-400 leading-relaxed">
+                {activeCommand.note}
+              </div>
+            )}
           </div>
         </div>
-
-        {/* Interactive Product Showcase (TUI Simulator) */}
-        <ProductShowcase />
       </div>
     </section>
   );

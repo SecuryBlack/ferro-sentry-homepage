@@ -19,11 +19,11 @@ export function CTASection() {
 
         <div className="relative z-10 max-w-3xl mx-auto text-center">
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-zinc-900 dark:text-white leading-tight">
-            Get Started with {activeAgentConfig.name} Today
+            Try it on one server
           </h2>
           <p className="mt-4 text-zinc-600 dark:text-zinc-400 text-sm sm:text-base">
-            Deploy in under 60 seconds as an autonomous open-source agent or connect with
-            SecuryBlack Cloud for centralized fleet orchestration.
+            Get the token for your server in the SecuryBlack panel and run the install command.
+            Findings, and the fixes you can apply, show up in the panel.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -38,7 +38,7 @@ export function CTASection() {
               rel="noopener noreferrer"
             >
               <Button variant="primary" size="lg" icon={<ArrowRight className="size-3.5" />}>
-                Explore SecuryBlack Cloud
+                Open SecuryBlack Cloud
               </Button>
             </a>
           </div>

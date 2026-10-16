@@ -77,9 +77,6 @@ export function Navbar() {
           <a href="#architecture" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
             Architecture
           </a>
-          <a href="#comparison" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
-            Comparison
-          </a>
           <a href="/#faq" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
             FAQ
           </a>
