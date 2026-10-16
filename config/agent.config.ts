@@ -263,7 +263,7 @@ export const ferroSentryConfig: AgentConfig = {
   binaryName: "ferrosentry",
   productTitle: "FerroSentry — High-Performance Host Security & EDR Agent",
   badge: "Rust Native · Open Source · Apache 2.0",
-  version: "v0.2.25",
+  version: "v0.2.28",
   tagline: "Active Server Defense & Continuous Posture Auditing",
   description:
     "Ultralightweight host security and EDR in Rust. Continuous auditd monitoring, SSH brute-force mitigation, dynamic nftables/UFW firewall management, and File Integrity Monitoring (FIM) with a standalone TUI.",
