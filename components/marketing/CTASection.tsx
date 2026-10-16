@@ -7,7 +7,7 @@ import { ArrowRight, Github } from "lucide-react";
 
 export function CTASection() {
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section id="cta" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <div className="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-gradient-to-b from-zinc-50 via-white to-zinc-100 dark:from-zinc-900/80 dark:via-zinc-950 dark:to-zinc-950 p-8 sm:p-12 shadow-xl dark:shadow-2xl relative overflow-hidden">
         {/* Glow */}
         <div
@@ -32,7 +32,11 @@ export function CTASection() {
                 View on GitHub
               </Button>
             </a>
-            <a href="https://app.securyblack.com" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://app.securyblack.com/?utm_source=ferrosentry.dev&utm_medium=referral&utm_campaign=ferrosentry_site&utm_content=cta"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Button variant="primary" size="lg" icon={<ArrowRight className="size-3.5" />}>
                 Explore SecuryBlack Cloud
               </Button>
