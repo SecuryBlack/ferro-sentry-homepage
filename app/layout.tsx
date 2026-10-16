@@ -4,8 +4,18 @@ import { Analytics } from "@/components/Analytics";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: `${activeAgentConfig.name} — ${activeAgentConfig.tagline}`,
+  metadataBase: new URL("https://ferrosentry.dev"),
+  title: `${activeAgentConfig.name}: ${activeAgentConfig.tagline}`,
   description: activeAgentConfig.description,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: activeAgentConfig.name,
+    title: `${activeAgentConfig.name}: ${activeAgentConfig.tagline}`,
+    description: activeAgentConfig.description,
+  },
+  twitter: { card: "summary" },
   icons: {
     icon: [
       { url: "/icon.svg", type: "image/svg+xml" },
