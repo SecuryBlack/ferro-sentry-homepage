@@ -9,7 +9,7 @@ const steps = [
     step: "01",
     icon: ClipboardCheck,
     title: "Audit",
-    desc: "Every hour, runs its eleven audit modules: ports, packages, SSH, file integrity, permissions, persistence, processes, firewall, fail2ban/CrowdSec, failed logins and TLS certificates.",
+    desc: "Every hour, runs its eleven audit modules: ports, packages, SSH, file integrity, permissions, persistence, processes, firewall, fail2ban/CrowdSec, failed logins and an inventory of Let's Encrypt certificates.",
     tag: "Read-only",
   },
   {
