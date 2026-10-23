@@ -122,7 +122,7 @@ export const activeAgentConfig: AgentConfig = {
   binaryName: "ferro-sentry",
   productTitle: "FerroSentry — Server security audit agent",
   badge: "Open source · Apache 2.0 · Rust",
-  version: "v0.2.28",
+  version: "v0.2.29",
   tagline: "Hourly security audits for your servers",
   description:
     "A Rust agent that audits your Linux servers every hour: open ports, SSH configuration, firewall and Docker bypass, pending security updates, SUID binaries, cron persistence, suspicious processes, failed logins and fail2ban/CrowdSec. Findings go to SecuryBlack Cloud, where you can also ask it to apply fixes.",
