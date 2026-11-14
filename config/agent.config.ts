@@ -122,7 +122,7 @@ export const activeAgentConfig: AgentConfig = {
   binaryName: "ferro-sentry",
   productTitle: "FerroSentry — Server security audit agent",
   badge: "Open source · Apache 2.0 · Rust",
-  version: "v0.2.30",
+  version: "v0.2.31",
   tagline: "Hourly security audits for your servers",
   description:
     "A Rust agent that audits your Linux servers every hour: open ports, SSH configuration, firewall and Docker bypass, pending security updates, SUID binaries, cron persistence, suspicious processes, failed logins and fail2ban/CrowdSec. Findings go to SecuryBlack Cloud, where you can also ask it to apply fixes.",
@@ -160,7 +160,7 @@ export const activeAgentConfig: AgentConfig = {
       title: "Posture audit",
       subtitle: "Every hour",
       description:
-        "Checks listening ports, sshd_config (root login, password authentication, port 22, X11 forwarding, MaxAuthTries), UFW and the iptables INPUT policy, Docker bypassing UFW, pending and security updates (apt, dnf, yum), unattended upgrades, SUID/SGID binaries in temporary directories, world-writable files in /etc and sudo logging.",
+        "Checks listening ports, the SSH settings sshd actually applies (root login, password authentication, port 22, X11 forwarding, MaxAuthTries), UFW and the iptables INPUT policy, Docker bypassing UFW, pending and security updates (apt, dnf, yum), unattended upgrades, SUID/SGID binaries in temporary directories, world-writable files in /etc and sudo logging.",
       colSpan: "col-span-2",
       tag: "Audit",
     },
@@ -178,7 +178,7 @@ export const activeAgentConfig: AgentConfig = {
       title: "Fixes when you ask",
       subtitle: "From the SecuryBlack panel",
       description:
-        "SSH hardening, UFW rules with anti-lockout protection, unattended upgrades, and installing and managing fail2ban and CrowdSec, including ban and unban. OS upgrades only run if you set allow_remote_os_upgrade = true on the server.",
+        "SSH hardening that checks sshd really applied it, UFW rules with anti-lockout protection, unattended upgrades, and installing and managing fail2ban and CrowdSec, including ban and unban. OS upgrades only run if you set allow_remote_os_upgrade = true on the server.",
       colSpan: "col-span-1",
       tag: "Remediation",
     },
