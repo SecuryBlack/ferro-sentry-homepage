@@ -122,10 +122,10 @@ export const activeAgentConfig: AgentConfig = {
   binaryName: "ferro-sentry",
   productTitle: "FerroSentry — Server security audit agent",
   badge: "Open source · Apache 2.0 · Rust",
-  version: "v0.2.31",
+  version: "v0.2.32",
   tagline: "Hourly security audits for your servers",
   description:
-    "A Rust agent that audits your Linux servers every hour: open ports, SSH configuration, firewall and Docker bypass, pending security updates, SUID binaries, cron persistence, suspicious processes, failed logins and fail2ban/CrowdSec. Findings go to SecuryBlack Cloud, where you can also ask it to apply fixes.",
+    "A Rust agent that audits your Linux servers every hour: open ports, SSH configuration, firewall and Docker bypass, pending security updates, SUID binaries, cron persistence, suspicious processes, failed logins and logins from new addresses, plaintext secrets, changes to SSH authorized keys and fail2ban/CrowdSec. Findings go to SecuryBlack Cloud, where you can also ask it to apply fixes.",
   theme: {
     primary: "#F43F5E", // Scarlet / Rose
     primaryDark: "#E11D48",
@@ -150,7 +150,7 @@ export const activeAgentConfig: AgentConfig = {
   ],
   stats: [
     { label: "Audit interval", value: "1 h", note: "Every module, every hour" },
-    { label: "Audit modules", value: "11", note: "Ports, SSH, firewall, FIM…" },
+    { label: "Audit modules", value: "12", note: "Ports, SSH, secrets, FIM…" },
     { label: "Changes", value: "On request", note: "Only on explicit commands" },
     { label: "Updates", value: "Signed", note: "ed25519-verified releases" },
   ],
@@ -169,7 +169,16 @@ export const activeAgentConfig: AgentConfig = {
       title: "Intrusion signals",
       subtitle: "Processes, logins, files",
       description:
-        "Failed logins in /var/log/auth.log, processes running from /tmp or /dev/shm or from deleted binaries, suspicious cron entries, and changes to /etc/passwd, /etc/shadow, /etc/sudoers, sshd_config and other critical files against a SHA-256 baseline.",
+        "Failed logins in /var/log/auth.log and successful SSH logins from an address never seen for that user, processes running from /tmp or /dev/shm or from deleted binaries, suspicious cron entries, and changes to /etc/passwd, /etc/shadow, /etc/sudoers, sshd_config, every user's authorized_keys and other critical files against a SHA-256 baseline.",
+      colSpan: "col-span-1",
+      tag: "Detection",
+    },
+    {
+      id: "secrets",
+      title: "Plaintext secrets",
+      subtitle: "What an intruder takes first",
+      description:
+        "Finds credentials left in plaintext: AWS keys, npm, PyPI, Docker, GitHub CLI and Kubernetes tokens, .git-credentials, .netrc, SSH private keys without a passphrase and .env files any user can read. Only the path and type are reported, never the content.",
       colSpan: "col-span-1",
       tag: "Detection",
     },
@@ -188,7 +197,7 @@ export const activeAgentConfig: AgentConfig = {
       subtitle: "ed25519",
       description:
         "The daily self-update only installs releases signed with SecuryBlack's offline ed25519 keys. Commands from the panel carry an ed25519 signature bound to your server (enforcement is rolling out). Every outbound connection is listed in SECURITY.md.",
-      colSpan: "col-span-2",
+      colSpan: "col-span-1",
       tag: "Trust",
     },
   ],
