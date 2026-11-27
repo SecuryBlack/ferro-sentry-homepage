@@ -122,10 +122,10 @@ export const activeAgentConfig: AgentConfig = {
   binaryName: "ferro-sentry",
   productTitle: "FerroSentry — Server security audit agent",
   badge: "Open source · Apache 2.0 · Rust",
-  version: "v0.2.32",
-  tagline: "Hourly security audits for your servers",
+  version: "v0.2.33",
+  tagline: "Security audits and real-time alerts for your servers",
   description:
-    "A Rust agent that audits your Linux servers every hour: open ports, SSH configuration, firewall and Docker bypass, pending security updates, SUID binaries, cron persistence, suspicious processes, failed logins and logins from new addresses, plaintext secrets, changes to SSH authorized keys and fail2ban/CrowdSec. Findings go to SecuryBlack Cloud, where you can also ask it to apply fixes.",
+    "A Rust agent that audits your Linux servers every hour and watches critical files and SSH logins in real time: open ports, SSH configuration, firewall and Docker bypass, pending security updates, SUID binaries, cron persistence, suspicious processes, failed logins and logins from new addresses, plaintext secrets, changes to SSH authorized keys and fail2ban/CrowdSec. Findings go to SecuryBlack Cloud, where you can also ask it to apply fixes.",
   theme: {
     primary: "#F43F5E", // Scarlet / Rose
     primaryDark: "#E11D48",
@@ -149,7 +149,7 @@ export const activeAgentConfig: AgentConfig = {
     },
   ],
   stats: [
-    { label: "Audit interval", value: "1 h", note: "Every module, every hour" },
+    { label: "Alert time", value: "10 s", note: "Critical files and logins; the rest hourly" },
     { label: "Audit modules", value: "12", note: "Ports, SSH, secrets, FIM…" },
     { label: "Changes", value: "On request", note: "Only on explicit commands" },
     { label: "Updates", value: "Signed", note: "ed25519-verified releases" },
@@ -167,9 +167,9 @@ export const activeAgentConfig: AgentConfig = {
     {
       id: "signals",
       title: "Intrusion signals",
-      subtitle: "Processes, logins, files",
+      subtitle: "Within seconds",
       description:
-        "Failed logins in /var/log/auth.log and successful SSH logins from an address never seen for that user, processes running from /tmp or /dev/shm or from deleted binaries, suspicious cron entries, and changes to /etc/passwd, /etc/shadow, /etc/sudoers, sshd_config, every user's authorized_keys and other critical files against a SHA-256 baseline.",
+        "Every 10 seconds: successful SSH logins from an address never seen for that user, and changes to /etc/passwd, /etc/shadow, /etc/sudoers, sshd_config, every user's authorized_keys and other critical files against a SHA-256 baseline. Every hour: failed logins in /var/log/auth.log, processes running from /tmp or /dev/shm or from deleted binaries and suspicious cron entries.",
       colSpan: "col-span-1",
       tag: "Detection",
     },
